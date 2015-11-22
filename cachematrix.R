@@ -1,15 +1,34 @@
-## Put comments here that give an overall description of what your
-## functions do
+## This file contains functions to fulfill Coursera R Programming
+## Assignment 2.
 
-## Write a short comment describing this function
+## makeCacheMatrix creates a cache of the inverse of the matrix
+## that the user inputs to the function itself.
 
 makeCacheMatrix <- function(x = matrix()) {
-
+    iv <- NULL
+    set <- function(y) {
+      x <<- y
+      iv <<- NULL
+    }
+    get <- function() x
+    setinverse <- function(solve) iv <<- inverse
+    getinverse <- function() x
+    list(set = set, get = get,
+         setinverse = setinverse,
+         getinverse = getinverse)
 }
 
-
-## Write a short comment describing this function
+## Use output of makeCacheMatrix to either return the matrix
+## or its inverse.
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+  iv <- x$getinverse()
+  if(!is.null(iv)) {
+    message("getting cached data")
+    return(iv)
+  }
+  data <- x$get()
+  iv <- solve(data, ...)
+  x$setinverse(iv)
+  iv
 }
